@@ -28,8 +28,8 @@ Gem::Specification.new do |s|
   s.executables = Dir.glob('bin/*').map{|f| File.basename(f)}
 
   s.rdoc_options = [
-    "--main",    "README.rdoc",
+    "--main",    "README.md",
     "--title",   "#{s.full_name} Documentation"]
-  s.extra_rdoc_files << "README.rdoc"
+  s.extra_rdoc_files << "README.md"
 end
 
