@@ -22,7 +22,7 @@ Gem::Specification.new do |s|
 
   s.files       = Dir.glob('{lib,bin}/**/*.rb') +
   		  Dir.glob('ext/**/*.{c,h,rb}') +
-		  %w(README.rdoc)
+		  %w(README.md)
   s.extensions = ['ext/finfast/extconf.rb']
   s.test_files  = Dir.glob('test/finfast/*_test.rb')
   s.executables = Dir.glob('bin/*').map{|f| File.basename(f)}
