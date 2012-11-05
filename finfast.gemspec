@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.platform          = Gem::Platform::RUBY
   s.authors           = ['Michael Grant']
   s.email             = ['mike.grant@jhu.edu']
-  s.homepage          = 'http://79mg.com/'
+  s.homepage          = 'https://github.com/mgrant79/finfast'
   s.summary           = %q{Fast Ruby financial math operations}
   s.description       = %q{Fast Ruby financial math operations, using native code}
 
