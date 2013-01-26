@@ -21,6 +21,97 @@ module Finfast
     newton(pmt_array, exp_array, guess, tolerance, iterations)
   end
 
+  # Future value of an annuity.
+  #
+  # Params:
+  # +i+:: The interest rate per period
+  # +n+:: The number of periods
+  # +pmt+:: The payment made in each period
+  # 
+  def fvan(i, n, pmt)
+    return pmt * (((1 + i) ** n) - 1) / i 
+  end
+
+  # Future value of a lump amount.
+  #
+  # Params:
+  # +i+:: The interest rate per period
+  # +n+:: The number of periods
+  # +amt+:: The amount in today's terms (present value)
+  # 
+  def fv(i, n, amt)
+    return  ((1 + i) ** n) * amt
+  end
+
+  # Calculates the payment for a loan based on constant payments and a
+  # constant interest rate.
+  #
+  # Params:
+  # +i+:: The interest rate per period
+  # +n+:: The number of periods
+  # +pv+:: The present value, or principal
+  #
+  def pmt(i, n, pv)
+    return pv  /  ((1 - (1 / (1 + i) ** n )) / i)
+  end
+
+  # The interest payment for a given period in an investment.
+  #
+  # Params:
+  # +i+:: The interest rate per period
+  # +n+:: The number of periods
+  # +per+:: The period for which to calculate the interest payment
+  # +pv+:: The present value, or principal
+  #
+  def ipmt(i, per, n, pv)
+    pmt = pmt(i, n, pv)
+    return ipmtp(i, per, pv, pmt)
+  end
+
+  # The interest payment for a loan, given that you are making a fixed
+  # payment different from the one dictated by the terms of the loan.
+  #
+  # Params:
+  # +i+:: The interest rate per period
+  # +per+:: The period for which to calculate the interest payment
+  # +pv+:: The present value, or principal
+  # +pmt+:: The amount of the fixed payment
+  #
+  def ipmtp(i, per, pv, pmt)
+    fv_orig = fv(i, per - 1, pv)       # FV at the beginning of the period
+    fvan_pmts = fvan(i, per - 1, pmt)  # FV of what we've been paying
+    balance_in_period = fv_orig - fvan_pmts # FV of what's left
+    return balance_in_period * i
+  end
+
+  def ipmts(i, pers, n, pv)
+    result = []
+    pers.each do |p|
+      result.push(ipmt(i, p, n, pv))
+    end
+    return result
+  end
+
+  def ipmtsp(i, pers, pv, pmt)
+    result = []
+    pers.each do |p|
+      result.push(ipmtp(i, p, pv, pmt))
+    end
+    return result
+  end
+
+  def pv_stream(i, stream)
+    result = 0
+    stream.each_with_index do |x, p|
+      result += x / (1 + i) ** (p + 1)
+    end
+    return result
+  end
+
+  def date_difference_months(d1, d2)
+    return d1.year * 12 - d2.year * 12 + d1.month - d2.month
+  end
+
   private
 
   def self.exp(d_i, d_0)
@@ -31,6 +122,6 @@ module Finfast
     end
   end
 
-  module_function :xirr, :newton
+  module_function :xirr, :pmt, :ipmt, :ipmtp, :ipmts, :fv, :fvan, :newton
 
 end

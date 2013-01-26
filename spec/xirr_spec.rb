@@ -1,18 +1,13 @@
 require 'spec_helper'
-require 'date'
 
 describe Finfast do
-
-  def dt(y, m, d)
-    Date.civil(y, m, d)
-  end
 
   before :each do
     @trans = Hash.new
   end
     
 
-  it "should calculate scenario 1 correctly" do
+  it "should calculate XIRR scenario 1 correctly" do
     @trans[dt(2012, 1, 1)] = -100
     @trans[dt(2012, 1, 4)] = 1 
     @trans[dt(2012, 2, 3)] = 1
@@ -22,13 +17,13 @@ describe Finfast do
     Finfast.xirr(@trans).should be_near(0.041206977068671)
   end
 
-  it "should calculate scenario 2 correctly" do
+  it "should calculate XIRR scenario 2 correctly" do
     @trans[dt(2007, 3, 9)] = -1530.95
     @trans[dt(2012,10,23)] = 209.3
     Finfast.xirr(@trans).should be_near(-0.297726819710638)
   end
 
-  it "should calculate scenario 3 correctly" do
+  it "should calculate XIRR scenario 3 correctly" do
     @trans[dt(2010, 9, 22)] = -825.0003
     @trans[dt(2010, 12, 10)] = -0.1299
     @trans[dt(2010, 12, 10)] += -32.0495
@@ -42,7 +37,7 @@ describe Finfast do
     Finfast.xirr(@trans).should be_near(0.076704239587883)
   end
 
-  it "should calculate scenario 4 correctly" do
+  it "should calculate XIRR scenario 4 correctly" do
     @trans[dt(2010, 9, 22)] = -825.0003
     @trans[dt(2010, 12, 10)] = 32.77
     @trans[dt(2010, 12, 10)] += -0.1299

@@ -1,10 +1,15 @@
 require 'rspec'
 require 'finfast'
+require 'date'
 
 DECIMAL_TOLERANCE = 1e-10
 
 def near_zero(value)
   value.abs < DECIMAL_TOLERANCE
+end
+
+def dt(y, m, d)
+  Date.civil(y, m, d)
 end
 
 RSpec.configure do |config|

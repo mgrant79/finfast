@@ -1,0 +1,11 @@
+require 'spec_helper'
+
+describe Finfast do
+
+  it "should calculate IPMT scenario 1 correctly" do
+    Finfast.impt(0.7, 1, 10, 1000).should == 700
+  end
+
+  end
+
+end
